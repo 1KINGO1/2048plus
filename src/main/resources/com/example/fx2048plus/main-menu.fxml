@@ -33,9 +33,9 @@
                         <Image url="@phone.jfif" />
                     </image>
                 </ImageView>
-                <Button disable="true" layoutX="142.0" layoutY="334.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="277.0" text="Medium" styleClass="button" fx:id="mediumButton"/>
+                <Button disable="true" layoutX="142.0" layoutY="334.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="277.0" text="Medium" styleClass="button" fx:id="mediumButton" onMouseClicked="#mediumButtonClickHandler"/>
                 <Button layoutX="142.0" layoutY="242.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="277.0" text="Easy" styleClass="button" fx:id="easyButton" onMouseClicked="#easyButtonClickHandler"/>
-                <Button disable="true" layoutX="142.0" layoutY="427.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="277.0" text="Hard" styleClass="button" fx:id="hardButton"/>
+                <Button disable="true" layoutX="142.0" layoutY="427.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="277.0" text="Hard" styleClass="button" fx:id="hardButton" onMouseClicked="#hardButtonClickHandler"/>
                 <Button layoutX="14.0" layoutY="685.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="151.0" text="Exit" styleClass="button" fx:id="exitButton" onMouseClicked="#onQuitButtonClick"/>
                 <ImageView fitHeight="200.0" fitWidth="450.0" layoutX="86.0" layoutY="250" fx:id="logoImageView">
                     <image>

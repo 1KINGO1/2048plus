@@ -94,6 +94,32 @@ public class MainMenuController {
     }
 
     @FXML
+    protected void mediumButtonClickHandler(){
+        if (isInTransition) return;
+        isInTransition = true;
+        try {
+            gameState.currentLevel = Levels.MEDIUM;
+            Scene scene = new Scene(Main.loadFXML("game"));
+            Main.applyFadeTransition(scene, stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void hardButtonClickHandler(){
+        if (isInTransition) return;
+        isInTransition = true;
+        try {
+            gameState.currentLevel = Levels.HARD;
+            Scene scene = new Scene(Main.loadFXML("game"));
+            Main.applyFadeTransition(scene, stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     protected void animateLogo() {
 
         if (!shouldAnimate) {
