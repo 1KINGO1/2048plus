@@ -93,7 +93,8 @@ public class GameManager extends Group {
 
     private void startGame() {
         board.stopCountdown();
-        createRandomTiles();
+        addAndAnimateRandomTile();
+        addAndAnimateRandomTile();
         int time = config.modifiers.stream().filter(m -> Modifiers.TIME == m.getName()).findFirst().map(Modifier::getCount).orElse(0);
         board.startCountdown(time * 60);
     }
@@ -134,7 +135,7 @@ public class GameManager extends Group {
 
         parallelTransition.play();
         board.removeTiles(mergedToBeRemoved);
-        createRandomTiles();
+        addAndAnimateRandomTile();
         parallelTransition.setOnFinished(e -> {});
         synchronized (tiles) {
             checkGameWon();
@@ -202,6 +203,8 @@ public class GameManager extends Group {
 
     private ScaleTransition animateNewlyAddedTile(Tile tile) {
         final var scaleTransition = new ScaleTransition(ANIMATION_NEWLY_ADDED_TILE, tile);
+        scaleTransition.setFromX(0);
+        scaleTransition.setFromY(0);
         scaleTransition.setToX(1.0);
         scaleTransition.setToY(1.0);
         scaleTransition.setInterpolator(Interpolator.EASE_OUT);
@@ -350,11 +353,6 @@ public class GameManager extends Group {
         selectedBonus = null;
         isSelecting = false;
         gameState.isUsingBonus = false;
-    }
-
-    private void createRandomTiles() {
-        addAndAnimateRandomTile();
-        addAndAnimateRandomTile();
     }
 
     // =================== Bonus Label Listeners ===================
