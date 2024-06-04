@@ -286,6 +286,13 @@ public class Board extends Pane {
         gridGroup.getChildren().remove(tile);
     }
 
+    public void activeBonus(Modifiers modifier) {
+        modifiersButtonMap.get(modifier).getStyleClass().add("active");
+    }
+    public void deactiveBonus(Modifiers modifier) {
+        modifiersButtonMap.get(modifier).getStyleClass().remove("active");
+    }
+
     public String tickCounter() {
         if (gameState.isGameOver) {
             timer.stop();

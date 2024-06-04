@@ -447,6 +447,7 @@ public class GameManager extends Group {
 
         if (gameState.modifiersCountMap.get(Modifiers.REMOVE) > 0) {
             gameState.isUsingBonus = true;
+            board.activeBonus(Modifiers.REMOVE);
             selectedBonus = Modifiers.REMOVE;
             isSelecting = true;
         }
@@ -455,6 +456,7 @@ public class GameManager extends Group {
         boolean isRemovedTime = board.decreaseCounter(60);
         if (isRemovedTime) {
             gameState.isUsingBonus = true;
+            board.deactiveBonus(Modifiers.REMOVE);
             tiles.put(tile.getLocation(), null);
             board.removeTile(tile);
             gameState.modifiersCountMap.put(Modifiers.REMOVE, gameState.modifiersCountMap.get(Modifiers.REMOVE) - 1);
@@ -473,6 +475,7 @@ public class GameManager extends Group {
 
         if (gameState.modifiersCountMap.get(Modifiers.X2) > 0) {
             gameState.isUsingBonus = true;
+            board.activeBonus(Modifiers.X2);
             selectedBonus = Modifiers.X2;
             isSelecting = true;
         }
@@ -484,6 +487,7 @@ public class GameManager extends Group {
         boolean isRemovedTime = board.decreaseCounter(60);
         if (isRemovedTime) {
             gameState.isUsingBonus = true;
+            board.deactiveBonus(Modifiers.X2);
             tile.setValue(tile.getValue() * 2);
             gameState.modifiersCountMap.put(Modifiers.X2, gameState.modifiersCountMap.get(Modifiers.X2) - 1);
             board.updateModifiersCount(Modifiers.X2, gameState.modifiersCountMap.get(Modifiers.X2));

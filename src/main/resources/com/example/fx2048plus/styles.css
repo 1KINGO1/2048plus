@@ -285,6 +285,14 @@
     -fx-border-color: #4dfa7e;
 }
 
+.active {
+    -fx-animated: true;
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+
+    -fx-background-color: #4d4d31;
+}
+
 .bonus-last-chance {
     -fx-text-fill: #f9f6f2;
     -fx-border-color: #f711b6;
