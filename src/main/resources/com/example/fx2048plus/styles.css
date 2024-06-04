@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+@font-face {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.button {
+    -fx-font : 20px "Pixelify Sans";
+    -fx-padding : 10px;
+    -fx-background-color : #1e1e1e;
+    -fx-border-color: #b431d2;
+    -fx-border-width: 2px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-animated: true;
+}
+
+.button:hover {
+    -fx-background-color : #4d4d4d;
+}
+
+.button:pressed {
+    -fx-background-color : #2d2d2d;
+    -fx-translate-y: 5px;
+}
+
+.button:disabled, .button:disabled > * {
+    -fx-opacity: 0.2;
+}
+
+
+/* Game box */
+
+.game-grid {
+    -fx-background-color: rgba(45, 45, 45, 0.8);
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+}
+.game-grid-cell {
+    -fx-fill: rgba(42, 42, 42, 0.8);
+    -fx-stroke-width: 3px;
+    -fx-stroke-type: centered;
+    -fx-stroke: #ae0af8;
+}
+
+.game-tile-2    {
+    -fx-font-size: 55px;
+    -fx-text-fill: #e3e2e2;
+    -fx-background-color: #b5a1f7;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-4    {
+    -fx-font-size: 55px;
+    -fx-text-fill: #e3e2e2;
+    -fx-background-color: #a086f7;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-8    {
+    -fx-font-size: 55px;
+    -fx-text-fill: #e3e2e2;
+    -fx-background-color: #815cfa;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-16   {
+    -fx-font-size: 55px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #764dfa;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-32   {
+    -fx-font-size: 55px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #683cfa;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-64   {
+    -fx-font-size: 55px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #592af5;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-128  {
+    -fx-font-size: 45px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #4711f7;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-effect: dropshadow( three-pass-box, rgba(120, 116, 243, 0.24), 30, 0.5, 0, 0 );
+    -fx-border-color: rgba(255, 255, 255, 0.14286);
+    -fx-border-width: 1;
+    -fx-animated: true;
+}
+.game-tile-256  {
+    -fx-font-size: 45px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #3606d4;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-effect: dropshadow( three-pass-box, rgba(116, 122, 243, 0.67), 30, 0.5, 0, 0 );
+    -fx-border-color: rgba(255, 255, 255, 0.19048);
+    -fx-border-width: 1;
+    -fx-animated: true;
+}
+.game-tile-512  {
+    -fx-font-size: 45px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #2a03ab;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-effect: dropshadow( three-pass-box, rgba(124, 116, 243, 0.4), 30, 0.5, 0, 0 );
+    -fx-border-color: rgba(255, 255, 255, 0.2381);
+    -fx-border-width: 1;
+    -fx-animated: true;
+}
+.game-tile-1024 {
+    -fx-font-size: 35px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #1a016b;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-effect: dropshadow( three-pass-box, rgba(120, 116, 243, 0.47), 30, 0.5, 0, 0 );
+    -fx-border-color: rgba(255, 255, 255, 0.28571);
+    -fx-border-width: 1;
+    -fx-animated: true;
+}
+.game-tile-2048 {
+    -fx-font-size: 35px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #07011c;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-effect: dropshadow( three-pass-box, rgba(116, 180, 243, 0.55), 30, 0.5, 0, 0 );
+    -fx-border-color: rgba(255, 255, 255, 0.33333);
+    -fx-border-width: 1;
+    -fx-animated: true;
+}
+.game-tile-4096   {
+    -fx-font-size: 30px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #e0d836;
+    -fx-effect: dropshadow( three-pass-box, rgba(248, 207, 52, 0.55), 30, 0.5, 0, 0 );
+    -fx-border-color: rgba(255, 255, 255, 0.33333);
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-8192   {
+    -fx-font-size: 30px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #af6da9;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-16384 {
+    -fx-font-size: 30px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #ab61a7;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-32768 {
+    -fx-font-size: 30px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #a755a6;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+.game-tile-65536, .game-tile-131072, .game-tile-262144 {
+    -fx-font-size: 25px;
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #3c3a32;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-animated: true;
+}
+
+.game-over-screen {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 20px;
+    -fx-font : 35px "Pixelify Sans";
+    -fx-text-fill: #f9f6f2;
+    -fx-animated: true;
+}
+
+.won {
+    -fx-text-fill: #ffdb2f;
+}
+
+.time-label {
+    -fx-text-fill: #f9f6f2;
+    -fx-background-color: #1e1e1e;
+    -fx-padding: 10px;
+    -fx-background-radius: 10px;
+    -fx-font : 20px "Pixelify Sans";
+    -fx-border-width: 4px;
+    -fx-border-color: rgba(180, 49, 210, 0.82);
+    -fx-border-radius: 10px;
+    -fx-animated: true;
+}
+
+.time-label-yellow {
+    -fx-text-fill: #e0b21c;
+}
+.time-label-red {
+    -fx-text-fill: #ce1515;
+}
+
+.tile-hover:hover{
+    -fx-cursor: hand;
+    -fx-animated: true;
+    -fx-background-color: #b29522;
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+.bonus-label {
+    -fx-font : 20px "Pixelify Sans";
+    -fx-text-fill: #f9f6f2;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-border-width: 2px;
+    -fx-border-color: rgba(39, 219, 252, 0.82);
+    -fx-background-color: #1e1e1e;
+    -fx-animated: true;
+    -fx-cursor: hand;
+}
+
+.bonus-wrapper {
+    -fx-background-color: rgba(30, 30, 30, 0.8);
+    -fx-padding: 10px;
+    -fx-background-radius: 10px;
+    -fx-font : 20px "Pixelify Sans";
+    -fx-border-width: 4px;
+    -fx-border-color: rgba(180, 49, 210, 0.82);
+    -fx-border-radius: 10px;
+}
+
+.bonus-count {
+    -fx-text-fill: #f9f6f2;
+    -fx-font : 20px "Pixelify Sans";
+}
+
+.bonus-label:hover {
+    -fx-border-color: rgba(39, 219, 252, 0.66);
+}
+
+.bonus-add-32 {
+    -fx-text-fill: #f9f6f2;
+    -fx-border-color: #3cc7fa;
+}
+
+.bonus-shuffle{
+    -fx-text-fill: #f9f6f2;
+    -fx-border-color: #fac85c;
+    -fx-font : 28px "Pixelify Sans";
+}
+
+.bonus-remove{
+    -fx-text-fill: #f9f6f2;
+    -fx-border-color: #f7a1a8;
+}
+
+.bonus-x2 {
+    -fx-text-fill: #f9f6f2;
+    -fx-border-color: #4dfa7e;
+}
+
+.bonus-last-chance {
+    -fx-text-fill: #f9f6f2;
+    -fx-border-color: #f711b6;
+    -fx-font : 12px "Pixelify Sans";
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-word-wrap: break-word;
+}
+
+.increase-time {
+    -fx-font : 18px "Pixelify Sans";
+    -fx-text-fill: #31f64d;
+}
+
+.decrease-time {
+    -fx-font : 18px "Pixelify Sans";
+    -fx-text-fill: #ff3251;
+}
