@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -68,7 +69,7 @@ public class GameManager extends Group {
         }
     }
 
-    private void initBonusCount(){
+    private void initBonusCount() {
         gameState.modifiersCountMap.put(
                 Modifiers.THREETWOADD, config.bonuses.stream().filter(m -> Modifiers.THREETWOADD == m.getName()).findFirst().map(Modifier::getCount).orElse(0)
         );
@@ -136,7 +137,8 @@ public class GameManager extends Group {
         parallelTransition.play();
         board.removeTiles(mergedToBeRemoved);
         addAndAnimateRandomTile();
-        parallelTransition.setOnFinished(e -> {});
+        parallelTransition.setOnFinished(e -> {
+        });
         synchronized (tiles) {
             checkGameWon();
             movingTiles = false;
@@ -219,25 +221,31 @@ public class GameManager extends Group {
             gameState.isGameWon = true;
             gameState.isGameOver = true;
 
-            switch (gameState.level) {
+            switch (gameState.currentLevel) {
                 case EASY:
-                    gameState.level = Levels.MEDIUM;
+                    if (gameState.level == Levels.EASY) {
+                        gameState.level = Levels.MEDIUM;
+                    }
                     break;
                 case MEDIUM:
-                    gameState.level = Levels.HARD;
+                    if (gameState.level == Levels.MEDIUM) {
+                        gameState.level = Levels.HARD;
+                    }
                     break;
             }
+
+            board.setGameWon(true);
 
             try {
                 Scene scene = new Scene(Main.loadFXML("main-menu"));
                 Main.applyStyles(scene);
-                board.setGameWon(true);
                 Main.applyFadeTransition(scene, stage);
             } catch (IOException e) {
                 System.out.println("main-menu.fxml");
             }
         }
     }
+
     private void checkGameOver() {
         if (tiles.values().parallelStream().noneMatch(Objects::isNull) && mergeMovementsAvailable() == 0) {
             gameState.isGameOver = true;
@@ -252,8 +260,8 @@ public class GameManager extends Group {
             return 1;
         }
 
-        for(int i = 0; i < config.gridSize; i++) {
-            for(int j = 0; j < config.gridSize; j++) {
+        for (int i = 0; i < config.gridSize; i++) {
+            for (int j = 0; j < config.gridSize; j++) {
                 Location location = new Location(i, j);
                 Tile tile = tiles.get(getLocation(location));
                 if (tile == null) {
@@ -301,6 +309,7 @@ public class GameManager extends Group {
     private boolean addAndAnimateRandomTile() {
         return addAndAnimateRandomTile(0);
     }
+
     private boolean addAndAnimateRandomTile(int value) {
         ArrayList<Location> randomLocs = new ArrayList<>(locations);
         Collections.shuffle(randomLocs);
@@ -321,14 +330,16 @@ public class GameManager extends Group {
         return true;
     }
 
-    private void tileHoverHandler(Tile tile){
+    private void tileHoverHandler(Tile tile) {
         if (!isSelecting) return;
         tile.getStyleClass().add("tile-hover");
     }
-    private void tileUnhoverHandler(Tile tile){
+
+    private void tileUnhoverHandler(Tile tile) {
         tile.getStyleClass().remove("tile-hover");
     }
-    private void tileClickHandler(MouseEvent event, Tile tile){
+
+    private void tileClickHandler(MouseEvent event, Tile tile) {
 
         MouseButton button = event.getButton();
 
@@ -342,12 +353,12 @@ public class GameManager extends Group {
             if (selectedBonus == Modifiers.X2) {
                 x2ClickHandler(tile);
             }
-        }
-        else {
+        } else {
             tileRightClickHandler(tile);
         }
 
     }
+
     private void tileRightClickHandler(Tile tile) {
         tile.getStyleClass().remove("tile-hover");
         selectedBonus = null;
@@ -357,7 +368,7 @@ public class GameManager extends Group {
 
     // =================== Bonus Label Listeners ===================
 
-    private void addBonusLabelListeners(){
+    private void addBonusLabelListeners() {
         System.out.println(modifiersButtonMap.get(Modifiers.THREETWOADD));
 
         modifiersButtonMap.get(Modifiers.THREETWOADD).setOnMouseClicked(e -> {
@@ -381,7 +392,7 @@ public class GameManager extends Group {
         });
     }
 
-    private void threeTwoAddBonusHandler(){
+    private void threeTwoAddBonusHandler() {
         if (gameState.isGameOver || gameState.isUsingBonus) {
             return;
         }
@@ -399,7 +410,8 @@ public class GameManager extends Group {
             gameState.isUsingBonus = false;
         }
     }
-    private void shuffleBonusHandler(){
+
+    private void shuffleBonusHandler() {
         if (gameState.isGameOver || gameState.isUsingBonus) {
             return;
         }
@@ -416,7 +428,8 @@ public class GameManager extends Group {
             }
         }
     }
-    private void lastChanceHandler(){
+
+    private void lastChanceHandler() {
         if (gameState.isGameOver || gameState.isUsingBonus) {
             return;
         }
@@ -440,8 +453,8 @@ public class GameManager extends Group {
         }
     }
 
-    private void removeHandler(){
-        if (gameState.isGameOver || gameState.isUsingBonus || selectedBonus != null){
+    private void removeHandler() {
+        if (gameState.isGameOver || gameState.isUsingBonus || selectedBonus != null) {
             return;
         }
 
@@ -452,7 +465,8 @@ public class GameManager extends Group {
             isSelecting = true;
         }
     }
-    private void removeClickHandler(Tile tile){
+
+    private void removeClickHandler(Tile tile) {
         boolean isRemovedTime = board.decreaseCounter(60);
         if (isRemovedTime) {
             gameState.isUsingBonus = true;
@@ -468,8 +482,8 @@ public class GameManager extends Group {
         tileRightClickHandler(tile);
     }
 
-    private void x2Handler(){
-        if (gameState.isGameOver || gameState.isUsingBonus || selectedBonus != null){
+    private void x2Handler() {
+        if (gameState.isGameOver || gameState.isUsingBonus || selectedBonus != null) {
             return;
         }
 
@@ -480,7 +494,8 @@ public class GameManager extends Group {
             isSelecting = true;
         }
     }
-    private void x2ClickHandler(Tile tile){
+
+    private void x2ClickHandler(Tile tile) {
 
         if (tile.getValue() >= 1024) return;
 
@@ -502,8 +517,7 @@ public class GameManager extends Group {
     // =============================================================
 
 
-
-    private void shuffleTiles(){
+    private void shuffleTiles() {
         board.removeAllTiles();
         List<Tile> tileList = new ArrayList<>(tiles.values());
         Collections.shuffle(tileList);
