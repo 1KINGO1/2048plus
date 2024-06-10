@@ -2,6 +2,7 @@ package com.example.fx2048plus.game;
 
 import com.example.fx2048plus.config.Config;
 import com.example.fx2048plus.config.LevelConfig;
+import com.example.fx2048plus.tile_modifiers.TileModifier;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
@@ -9,6 +10,7 @@ public class Tile extends Label {
 
     private int value;
     private Location location;
+    private TileModifier modifier = null;
 
     public Tile(int value, LevelConfig config) {
         this.value = value;
@@ -24,7 +26,12 @@ public class Tile extends Label {
     }
 
     public void setLocation(Location location) {
+
         this.location = location;
+
+        if (modifier != null) {
+            modifier.onSpawn();
+        }
     }
 
     public Location getLocation() {
@@ -36,7 +43,7 @@ public class Tile extends Label {
     }
     public int setValue(int value) {
         setText(value + "");
-        getStyleClass().removeAll();
+        getStyleClass().clear();
         getStyleClass().addAll("game-label", "game-tile-" + value);
         return this.value = value;
     }
@@ -49,7 +56,28 @@ public class Tile extends Label {
     }
 
     public boolean isMergeable(Tile other) {
-        return value == other.value;
+
+        TileModifier otherModifier = other.getTileModifier();
+
+        boolean mergeable = value == other.value;
+        if (modifier != null) {
+            mergeable = mergeable && modifier.isMergeable();
+        }
+        if (otherModifier != null) {
+            mergeable = mergeable && otherModifier.isMergeable();
+        }
+        return mergeable;
     }
 
+    public void setModifier(TileModifier modifier) {
+        this.modifier = modifier;
+    }
+
+    public void removeModifier(TileModifier modifier) {
+        this.modifier = null;
+    }
+
+    public TileModifier getTileModifier() {
+        return modifier;
+    }
 }

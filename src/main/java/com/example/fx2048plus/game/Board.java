@@ -1,6 +1,5 @@
 package com.example.fx2048plus.game;
 
-import com.example.fx2048plus.Main;
 import com.example.fx2048plus.config.Config;
 import com.example.fx2048plus.config.LevelConfig;
 import com.example.fx2048plus.config.Modifier;
@@ -13,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -26,7 +24,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
-import java.io.IOException;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -347,6 +344,24 @@ public class Board extends Pane {
 
     public boolean checkTimeLessThan(int time) {
         return currentCounter <= time;
+    }
+
+    public void updateTilesModifierStyles(){
+        for (Node node : gridGroup.getChildren()) {
+            if (node instanceof Tile) {
+                Tile tile = (Tile) node;
+
+                // Set default styles
+                tile.setValue(tile.getValue());
+
+                System.out.println(tile.getStyleClass());
+
+                if (tile.getTileModifier() != null) {
+                    // Set modifier styles
+                    tile.getStyleClass().add(tile.getTileModifier().getClassName());
+                }
+            }
+        }
     }
 
     public String tickCounter() {

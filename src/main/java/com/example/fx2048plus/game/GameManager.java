@@ -2,6 +2,8 @@ package com.example.fx2048plus.game;
 
 import com.example.fx2048plus.Main;
 import com.example.fx2048plus.config.*;
+import com.example.fx2048plus.tile_modifiers.FrozenModifier;
+import com.example.fx2048plus.tile_modifiers.TileModifier;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -157,12 +159,31 @@ public class GameManager extends Group {
         parallelTransition.play();
         board.removeTiles(mergedToBeRemoved);
         addAndAnimateRandomTile();
-        parallelTransition.setOnFinished(e -> {
-        });
+        parallelTransition.setOnFinished(e -> {});
         synchronized (tiles) {
+            addModifiersToTiles();
             checkGameWon();
             movingTiles = false;
         }
+    }
+
+    private void addModifiersToTiles(){
+        for (Tile tile : tiles.values()) {
+            if (tile != null && tile.getTileModifier() == null) {
+                tile.setModifier(getRandomTileModifier(tile));
+            }
+        }
+        board.updateTilesModifierStyles();
+    }
+
+    private TileModifier getRandomTileModifier(Tile tile) {
+        double random = Math.random();
+
+        if (random <= FrozenModifier.getAppearanceChance()) {
+            return new FrozenModifier(tile);
+        }
+
+        return null;
     }
 
     private void moveTile(int i, int j, Direction direction, ParallelTransition parallelTransition) {
@@ -172,6 +193,15 @@ public class GameManager extends Group {
 
         if (tile.isEmpty()) {
             return;
+        }
+
+        TileModifier tileModifier = tile.get().getTileModifier();
+
+        if (tileModifier != null) {
+            tileModifier.onMove();
+            if (!tileModifier.isMovable()) {
+                return;
+            }
         }
 
         Location farthestEmptyLocation = getLocation(findFarthestLocation(location, direction));

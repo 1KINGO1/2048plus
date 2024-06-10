@@ -312,3 +312,11 @@
     -fx-font : 18px "Pixelify Sans";
     -fx-text-fill: #ff3251;
 }
+
+.frozen-tile {
+    -fx-background-color: rgba(0, 223, 255, 0.45);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center top;
+    -fx-background-image: url('frozen.png');
+}
