@@ -24,10 +24,10 @@ public class Config {
     };
     private static final List<Modifier> easyLevelModifiers = new ArrayList<Modifier>() {
         {
-            add(new Modifier(Modifiers.TIME, 1));
+            add(new Modifier(Modifiers.TIME, 15));
         }
     };
-    private static final LevelConfig easyLevelConfig = new LevelConfig(5, 64, easyLevelBonuses, easyLevelModifiers);
+    private static final LevelConfig easyLevelConfig = new LevelConfig(5, 2048, easyLevelBonuses, easyLevelModifiers);
 
     private static final List<Modifier> mediumLevelBonuses = new ArrayList<Modifier>() {
         {
@@ -40,7 +40,7 @@ public class Config {
     };
     private static final List<Modifier> mediumLevelModifiers = new ArrayList<Modifier>() {
         {
-            add(new Modifier(Modifiers.TIME, 15));
+            add(new Modifier(Modifiers.TIME, 10));
         }
     };
     private static final LevelConfig mediumLevelConfig = new LevelConfig(4, 2048, mediumLevelBonuses, mediumLevelModifiers);
@@ -56,7 +56,7 @@ public class Config {
     };
     private static final List<Modifier> hardLevelModifiers = new ArrayList<Modifier>() {
         {
-            add(new Modifier(Modifiers.TIME, 15));
+            add(new Modifier(Modifiers.TIME, 10));
         }
     };
     private static final LevelConfig hardLevelConfig = new LevelConfig(4, 4096, hardLevelBonuses, hardLevelModifiers);
