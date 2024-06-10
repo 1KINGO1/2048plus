@@ -45,8 +45,28 @@ public class GameManager extends Group {
         this.config = config;
         this.stage = stage;
         this.locations = new ArrayList<>(config.gridSize * config.gridSize);
-        board = new Board(config, modifiersButtonMap, modifiersCountMap);
+        board = new Board(config, stage, modifiersButtonMap, modifiersCountMap);
         getChildren().add(board);
+
+        board.setBackButtonClickHandler(event ->  {
+            try {
+                Scene scene = new Scene(Main.loadFXML("main-menu"));
+                Main.applyStyles(scene);
+                Main.applyFadeTransition(scene, stage);
+            } catch (IOException e) {
+                System.out.println("main-menu.fxml");
+            }
+        });
+        board.setRestartButtonClickHandler(event -> restartGame());
+        board.setNextButtonClickHandler(event -> {
+            try {
+                Scene scene = new Scene(Main.loadFXML("main-menu"));
+                Main.applyStyles(scene);
+                Main.applyFadeTransition(scene, stage);
+            } catch (IOException e) {
+                System.out.println("main-menu.fxml");
+            }
+        });
 
         init();
         startGame();
@@ -235,14 +255,6 @@ public class GameManager extends Group {
             }
 
             board.setGameWon(true);
-
-            try {
-                Scene scene = new Scene(Main.loadFXML("main-menu"));
-                Main.applyStyles(scene);
-                Main.applyFadeTransition(scene, stage);
-            } catch (IOException e) {
-                System.out.println("main-menu.fxml");
-            }
         }
     }
 
@@ -399,10 +411,11 @@ public class GameManager extends Group {
 
         if (gameState.modifiersCountMap.get(Modifiers.THREETWOADD) > 0) {
             gameState.isUsingBonus = true;
-            boolean isRemovedTime = board.decreaseCounter(30);
-            if (isRemovedTime) {
+            boolean isHasTime = board.checkTimeGreaterThan(35);
+            if (isHasTime) {
                 boolean isAdded = addAndAnimateRandomTile(32);
                 if (isAdded) {
+                    board.decreaseCounter(30);
                     gameState.modifiersCountMap.put(Modifiers.THREETWOADD, gameState.modifiersCountMap.get(Modifiers.THREETWOADD) - 1);
                     board.updateModifiersCount(Modifiers.THREETWOADD, gameState.modifiersCountMap.get(Modifiers.THREETWOADD));
                 }
@@ -417,11 +430,12 @@ public class GameManager extends Group {
         }
 
         if (gameState.modifiersCountMap.get(Modifiers.SHUFFLE) > 0) {
-            boolean isRemovedTime = board.decreaseCounter(60);
+            boolean isHasTime = board.checkTimeGreaterThan(65);
 
-            if (isRemovedTime) {
+            if (isHasTime) {
                 gameState.isUsingBonus = true;
                 shuffleTiles();
+                board.decreaseCounter(60);
                 gameState.modifiersCountMap.put(Modifiers.SHUFFLE, gameState.modifiersCountMap.get(Modifiers.SHUFFLE) - 1);
                 board.updateModifiersCount(Modifiers.SHUFFLE, gameState.modifiersCountMap.get(Modifiers.SHUFFLE));
                 gameState.isUsingBonus = false;
@@ -434,7 +448,9 @@ public class GameManager extends Group {
             return;
         }
 
-        if (gameState.modifiersCountMap.get(Modifiers.LASTCHANCE) > 0) {
+        boolean isHasTime = board.checkTimeLessThan(60 * 3);
+
+        if (gameState.modifiersCountMap.get(Modifiers.LASTCHANCE) > 0 && isHasTime) {
             gameState.isUsingBonus = true;
             gameState.modifiersCountMap.put(Modifiers.LASTCHANCE, gameState.modifiersCountMap.get(Modifiers.LASTCHANCE) - 1);
             board.updateModifiersCount(Modifiers.LASTCHANCE, gameState.modifiersCountMap.get(Modifiers.LASTCHANCE));
@@ -467,9 +483,10 @@ public class GameManager extends Group {
     }
 
     private void removeClickHandler(Tile tile) {
-        boolean isRemovedTime = board.decreaseCounter(60);
-        if (isRemovedTime) {
+        boolean isHasTime = board.checkTimeGreaterThan(65);
+        if (isHasTime) {
             gameState.isUsingBonus = true;
+            board.decreaseCounter(60);
             board.deactiveBonus(Modifiers.REMOVE);
             tiles.put(tile.getLocation(), null);
             board.removeTile(tile);
@@ -480,8 +497,9 @@ public class GameManager extends Group {
         }
         gameState.isUsingBonus = false;
         tileRightClickHandler(tile);
-    }
+    } 
 
+    // TODO: click to deactivate
     private void x2Handler() {
         if (gameState.isGameOver || gameState.isUsingBonus || selectedBonus != null) {
             return;
@@ -499,10 +517,11 @@ public class GameManager extends Group {
 
         if (tile.getValue() >= 1024) return;
 
-        boolean isRemovedTime = board.decreaseCounter(60);
-        if (isRemovedTime) {
+        boolean isHasTime = board.checkTimeGreaterThan(65);
+        if (isHasTime) {
             gameState.isUsingBonus = true;
             board.deactiveBonus(Modifiers.X2);
+            board.decreaseCounter(60);
             tile.setValue(tile.getValue() * 2);
             gameState.modifiersCountMap.put(Modifiers.X2, gameState.modifiersCountMap.get(Modifiers.X2) - 1);
             board.updateModifiersCount(Modifiers.X2, gameState.modifiersCountMap.get(Modifiers.X2));

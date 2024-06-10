@@ -1,5 +1,6 @@
 package com.example.fx2048plus.game;
 
+import com.example.fx2048plus.Main;
 import com.example.fx2048plus.config.Config;
 import com.example.fx2048plus.config.LevelConfig;
 import com.example.fx2048plus.config.Modifier;
@@ -8,16 +9,24 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +45,9 @@ public class Board extends Pane {
     private final StringProperty clock = new SimpleStringProperty("00:00");
     private final Group gridGroup = new Group();
     private final Label gameOverLabel;
+    private final Button nextButton = new Button("Next");
+    private final Button restartButton = new Button("Restart");
+    private final Button backButton = new Button("Back");
     private Label timeLabel = new Label();
     private Label targetLabel = new Label();
     private GameState gameState = GameState.getInstance();
@@ -43,7 +55,7 @@ public class Board extends Pane {
     private final Map<Modifiers, Label> modifiersCountMap;
     private final Map<Modifiers, Label> modifiersButtonMap;
 
-    public Board(LevelConfig config,  Map<Modifiers, Label> modifiersButtonMap, Map<Modifiers, Label> modifiersCountMap) {
+    public Board(LevelConfig config, Stage stage, Map<Modifiers, Label> modifiersButtonMap, Map<Modifiers, Label> modifiersCountMap) {
         this.config = config;
         this.CELL_SIZE = config.cellSize;
 
@@ -69,6 +81,18 @@ public class Board extends Pane {
         targetLabel.setAlignment(javafx.geometry.Pos.CENTER);
         getChildren().add(targetLabel);
 
+        backButton.getStyleClass().add("button");
+        backButton.setLayoutX(Config.GAME_BOX_OFFSET_X + CELL_SIZE * config.gridSize / 2 - 105);
+        backButton.setLayoutY(Config.GAME_BOX_OFFSET_Y + Config.GAME_BOX_CELL_STOKE_WIDTH + CELL_SIZE * config.gridSize - 70);
+
+        nextButton.getStyleClass().add("button");
+        nextButton.setLayoutX(Config.GAME_BOX_OFFSET_X + CELL_SIZE * config.gridSize / 2 - 37);
+        nextButton.setLayoutY(Config.GAME_BOX_OFFSET_Y + Config.GAME_BOX_CELL_STOKE_WIDTH + CELL_SIZE * config.gridSize - 70);
+
+        restartButton.getStyleClass().add("button");
+        restartButton.setLayoutX(Config.GAME_BOX_OFFSET_X + CELL_SIZE * config.gridSize / 2 -10);
+        restartButton.setLayoutY(Config.GAME_BOX_OFFSET_Y + Config.GAME_BOX_CELL_STOKE_WIDTH + CELL_SIZE * config.gridSize - 70);
+
         for (int i = 0; i < config.gridSize; i++) {
             for (int j = 0; j < config.gridSize; j++) {
                 gridGroup.getChildren().add(createCell(i, j));
@@ -78,6 +102,16 @@ public class Board extends Pane {
 
         createTimeLabel();
         createBonusCells();
+    }
+
+    public void setRestartButtonClickHandler(EventHandler<MouseEvent> eventHandler) {
+        restartButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
+    }
+    public void setNextButtonClickHandler(EventHandler<MouseEvent> eventHandler) {
+        nextButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
+    }
+    public void setBackButtonClickHandler(EventHandler<MouseEvent> eventHandler) {
+        backButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
     }
 
     private Rectangle createCell(int i, int j) {
@@ -169,39 +203,53 @@ public class Board extends Pane {
 
         gameState.isGameOver = gameOver;
 
+        clearGameOverLabel();
+
         if (gameOver) {
-            gridGroup.getChildren().remove(gameOverLabel);
             gameOverLabel.getStyleClass().add("game-over-screen");
             final var fadeIn = new FadeTransition(Duration.millis(1200), gameOverLabel);
             fadeIn.setFromValue(0);
             fadeIn.setToValue(0.9);
             fadeIn.setInterpolator(Interpolator.EASE_OUT);
             fadeIn.play();
-            gridGroup.getChildren().add(gameOverLabel);
 
+            gridGroup.getChildren().add(gameOverLabel);
+            gridGroup.getChildren().add(restartButton);
+            gridGroup.getChildren().add(backButton);
         } else {
-            gridGroup.getChildren().remove(gameOverLabel);
             gameOverLabel.getStyleClass().clear();
         }
     }
     public void setGameWon(boolean gameWon) {
         gameState.isGameWon = gameWon;
 
+        clearGameOverLabel();
+
         if (gameWon) {
-            gridGroup.getChildren().remove(gameOverLabel);
-            final var fadeIn = new FadeTransition(Duration.millis(1200), gameOverLabel);
-            fadeIn.setFromValue(0);
-            fadeIn.setToValue(0.9);
-            fadeIn.setInterpolator(Interpolator.EASE_OUT);
-            fadeIn.play();
+            applyFadeInAnimation(gameOverLabel);
             gameOverLabel.setText("Game Won");
             gameOverLabel.getStyleClass().add("game-over-screen");
             gameOverLabel.getStyleClass().add("won");
             gridGroup.getChildren().add(gameOverLabel);
+
+            applyFadeInAnimation(nextButton);
+            gridGroup.getChildren().add(nextButton);
         } else {
-            gridGroup.getChildren().remove(gameOverLabel);
             gameOverLabel.getStyleClass().clear();
         }
+    }
+    private void clearGameOverLabel(){
+        gridGroup.getChildren().remove(gameOverLabel);
+        gridGroup.getChildren().remove(restartButton);
+        gridGroup.getChildren().remove(backButton);
+        gridGroup.getChildren().remove(nextButton);
+    }
+    private void applyFadeInAnimation(Node node){
+        final var fadeIn = new FadeTransition(Duration.millis(1200), node);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(0.9);
+        fadeIn.setInterpolator(Interpolator.EASE_OUT);
+        fadeIn.play();
     }
 
     public void createTimeLabel() {
@@ -291,6 +339,14 @@ public class Board extends Pane {
     }
     public void deactiveBonus(Modifiers modifier) {
         modifiersButtonMap.get(modifier).getStyleClass().remove("active");
+    }
+
+    public boolean checkTimeGreaterThan(int time) {
+        return currentCounter >= time;
+    }
+
+    public boolean checkTimeLessThan(int time) {
+        return currentCounter <= time;
     }
 
     public String tickCounter() {

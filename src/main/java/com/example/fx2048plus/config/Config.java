@@ -24,7 +24,7 @@ public class Config {
     };
     private static final List<Modifier> easyLevelModifiers = new ArrayList<Modifier>() {
         {
-            add(new Modifier(Modifiers.TIME, 20));
+            add(new Modifier(Modifiers.TIME, 1));
         }
     };
     private static final LevelConfig easyLevelConfig = new LevelConfig(5, 64, easyLevelBonuses, easyLevelModifiers);
