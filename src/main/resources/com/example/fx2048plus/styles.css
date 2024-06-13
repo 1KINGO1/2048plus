@@ -320,3 +320,11 @@
     -fx-background-position: center top;
     -fx-background-image: url('frozen.png');
 }
+
+.stone-tile {
+    -fx-background-color: rgba(108, 108, 108, 0.45);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-image: url('stone.jpg');
+}

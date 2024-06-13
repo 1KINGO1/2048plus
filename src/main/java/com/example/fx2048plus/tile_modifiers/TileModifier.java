@@ -17,4 +17,6 @@ public interface TileModifier {
     public void onDestroy();
     public void onMove();
     public void onSpawn();
+
+    public static void cleanup() {};
 }

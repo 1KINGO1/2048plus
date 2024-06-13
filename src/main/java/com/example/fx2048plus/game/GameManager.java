@@ -3,6 +3,7 @@ package com.example.fx2048plus.game;
 import com.example.fx2048plus.Main;
 import com.example.fx2048plus.config.*;
 import com.example.fx2048plus.tile_modifiers.FrozenModifier;
+import com.example.fx2048plus.tile_modifiers.StoneModifier;
 import com.example.fx2048plus.tile_modifiers.TileModifier;
 import javafx.animation.*;
 import javafx.scene.Group;
@@ -80,6 +81,7 @@ public class GameManager extends Group {
         tiles.clear();
         board.removeAllTiles();
         board.setGameOver(false);
+        cleanUpModifiers();
         initBonusCount();
 
         for (int i = 0; i < config.gridSize; i++) {
@@ -89,6 +91,11 @@ public class GameManager extends Group {
                 tiles.put(location, null);
             }
         }
+    }
+
+    private void cleanUpModifiers(){
+        FrozenModifier.cleanup();
+        StoneModifier.cleanup();
     }
 
     private void initBonusCount() {
@@ -181,6 +188,10 @@ public class GameManager extends Group {
 
         if (random <= FrozenModifier.getAppearanceChance()) {
             return new FrozenModifier(tile);
+        }
+
+        if (random <= StoneModifier.getAppearanceChance()) {
+            return new StoneModifier(tile);
         }
 
         return null;
@@ -500,6 +511,16 @@ public class GameManager extends Group {
     }
 
     private void removeHandler() {
+
+        if (gameState.isUsingBonus && selectedBonus == Modifiers.REMOVE) {
+            gameState.isUsingBonus = false;
+            selectedBonus = null;
+            isSelecting = false;
+
+            board.deactiveBonus(Modifiers.REMOVE);
+            return;
+        }
+
         if (gameState.isGameOver || gameState.isUsingBonus || selectedBonus != null) {
             return;
         }
@@ -513,6 +534,7 @@ public class GameManager extends Group {
     }
 
     private void removeClickHandler(Tile tile) {
+
         boolean isHasTime = board.checkTimeGreaterThan(65);
         if (isHasTime) {
             gameState.isUsingBonus = true;
@@ -529,9 +551,18 @@ public class GameManager extends Group {
         tileRightClickHandler(tile);
     } 
 
-    // TODO: click to deactivate
     private void x2Handler() {
-        if (gameState.isGameOver || gameState.isUsingBonus || selectedBonus != null) {
+
+        if (gameState.isUsingBonus && selectedBonus == Modifiers.X2) {
+            gameState.isUsingBonus = false;
+            selectedBonus = null;
+            isSelecting = false;
+
+            board.deactiveBonus(Modifiers.X2);
+            return;
+        }
+
+        if (gameState.isGameOver  || gameState.isUsingBonus || selectedBonus != null) {
             return;
         }
 

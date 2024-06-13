@@ -6,7 +6,7 @@ public class FrozenModifier implements TileModifier{
 
     private static int modifiersCount = 0;
 
-    private int aliveTimeLeft = 20;
+    private int aliveTimeLeft = 35;
     private Tile tile;
 
     public FrozenModifier(Tile tile) {
@@ -24,7 +24,7 @@ public class FrozenModifier implements TileModifier{
             return -1d;
         }
 
-        return 0.0008d;
+        return 0.001d;
     }
 
     @Override
@@ -70,5 +70,9 @@ public class FrozenModifier implements TileModifier{
     @Override
     public void onSpawn() {
 
+    }
+
+    public static void cleanup(){
+        FrozenModifier.modifiersCount = 0;
     }
 }
