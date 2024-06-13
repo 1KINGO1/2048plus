@@ -6,7 +6,7 @@ public class StoneModifier implements TileModifier{
 
     private static int modifiersCount = 0;
 
-    private int aliveTimeLeft = 60;
+    private int aliveTimeLeft = 100;
     private Tile tile;
 
     public StoneModifier(Tile tile) {
@@ -24,7 +24,7 @@ public class StoneModifier implements TileModifier{
             return -1d;
         }
 
-        return 0.001d;
+        return 0.005d;
     }
 
     @Override
