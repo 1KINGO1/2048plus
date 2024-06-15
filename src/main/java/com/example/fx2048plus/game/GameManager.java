@@ -2,6 +2,7 @@ package com.example.fx2048plus.game;
 
 import com.example.fx2048plus.Main;
 import com.example.fx2048plus.config.*;
+import com.example.fx2048plus.music.MusicPlayer;
 import com.example.fx2048plus.tile_modifiers.FrozenModifier;
 import com.example.fx2048plus.tile_modifiers.StoneModifier;
 import com.example.fx2048plus.tile_modifiers.TileModifier;
@@ -295,6 +296,7 @@ public class GameManager extends Group {
                     break;
             }
 
+            MusicPlayer.playWinMusic();
             board.setGameWon(true);
         }
     }

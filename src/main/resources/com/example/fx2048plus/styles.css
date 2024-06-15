@@ -322,9 +322,9 @@
 }
 
 .stone-tile {
-    -fx-background-color: rgba(108, 108, 108, 0.45);
+    -fx-background-color: rgba(19, 19, 31, 8);
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
-    -fx-background-image: url('stone.jpg');
+    -fx-background-image: url('stone.png');
 }

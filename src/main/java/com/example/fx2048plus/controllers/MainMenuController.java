@@ -3,6 +3,7 @@ package com.example.fx2048plus.controllers;
 import com.example.fx2048plus.game.GameState;
 import com.example.fx2048plus.Main;
 import com.example.fx2048plus.config.Levels;
+import com.example.fx2048plus.music.MusicPlayer;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -14,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class MainMenuController {
     GameState gameState;
@@ -41,11 +44,14 @@ public class MainMenuController {
     private boolean shouldAnimate = true;
     private boolean isInTransition = false;
 
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
     public void initialize() {
+        MusicPlayer.playMainMenuMusic();
+
         gameState = GameState.getInstance();
 
         shouldAnimate = gameState.level == Levels.EASY;
@@ -74,11 +80,13 @@ public class MainMenuController {
             hardButton.setDisable(false);
         }
     }
-
     @FXML
     protected void onQuitButtonClick() {
         System.exit(0);
     }
+
+
+
 
     @FXML
     protected void easyButtonClickHandler(){
@@ -87,6 +95,9 @@ public class MainMenuController {
         try {
             gameState.currentLevel = Levels.EASY;
             Scene scene = new Scene(Main.loadFXML("game"));
+
+            onLevelButtonClick();
+
             Main.applyFadeTransition(scene, stage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,6 +111,9 @@ public class MainMenuController {
         try {
             gameState.currentLevel = Levels.MEDIUM;
             Scene scene = new Scene(Main.loadFXML("game"));
+
+            onLevelButtonClick();
+
             Main.applyFadeTransition(scene, stage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,11 +127,21 @@ public class MainMenuController {
         try {
             gameState.currentLevel = Levels.HARD;
             Scene scene = new Scene(Main.loadFXML("game"));
+
+            onLevelButtonClick();
+
             Main.applyFadeTransition(scene, stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void onLevelButtonClick(){
+        MusicPlayer.playButtonClickSound();
+        MusicPlayer.playTransitionSound();
+        MusicPlayer.stopMainMenuMusic();
+    }
+
 
     @FXML
     protected void animateLogo() {

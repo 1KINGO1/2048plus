@@ -3,6 +3,7 @@ package com.example.fx2048plus.controllers;
 import com.example.fx2048plus.game.Game;
 import com.example.fx2048plus.game.GameState;
 import com.example.fx2048plus.config.Config;
+import com.example.fx2048plus.music.MusicPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -14,7 +15,11 @@ public class GameController {
     @FXML
     Pane wrapper;
 
-    public void initialize() {}
+    public void initialize() {
+
+        MusicPlayer.playLevelMusic(gameState.currentLevel);
+
+    }
 
     public void setStage(Stage stage) {
 

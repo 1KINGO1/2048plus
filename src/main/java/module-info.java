@@ -1,6 +1,7 @@
 module com.example.fx2048plus {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
 
     opens com.example.fx2048plus to javafx.fxml;
