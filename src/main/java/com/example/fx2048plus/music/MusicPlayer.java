@@ -19,6 +19,7 @@ public class MusicPlayer {
     private static final Media mediumLevelMusic = new Media(Main.class.getResource("sounds/medium-level-music.mp3").toString());
     private static final Media hardLevelMusic = new Media(Main.class.getResource("sounds/hard-level-music.mp3").toString());
     private static final Media victoryMusic = new Media(Main.class.getResource("sounds/victory-music.mp3").toString());
+    private static final Media gameLost = new Media(Main.class.getResource("sounds/game-lost.mp3").toString());
 
     private static MediaPlayer currentMusicPlayer = new MediaPlayer(mainMenuMusic);
 
@@ -94,6 +95,25 @@ public class MusicPlayer {
                     applyPlayerSettings(currentMusicPlayer);
                     currentMusicPlayer.setVolume(0.07);
                     currentMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                    currentMusicPlayer.play();
+                })
+        );
+
+        timeline.playFromStart();
+    }
+
+    public static void playGameLostSound(){
+        if (currentMusicPlayer != null) {
+            currentMusicPlayer.stop();
+        }
+
+        currentMusicPlayer = new MediaPlayer(gameLost);
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.6), e -> {
+                    applyPlayerSettings(currentMusicPlayer);
+                    currentMusicPlayer.setVolume(0.07);
+                    currentMusicPlayer.setCycleCount(0);
                     currentMusicPlayer.play();
                 })
         );

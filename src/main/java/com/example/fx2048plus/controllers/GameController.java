@@ -17,7 +17,7 @@ public class GameController {
 
     public void initialize() {
 
-        MusicPlayer.playLevelMusic(gameState.currentLevel);
+
 
     }
 

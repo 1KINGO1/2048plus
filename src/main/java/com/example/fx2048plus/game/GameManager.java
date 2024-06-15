@@ -85,6 +85,8 @@ public class GameManager extends Group {
         cleanUpModifiers();
         initBonusCount();
 
+        MusicPlayer.playLevelMusic(gameState.currentLevel);
+
         for (int i = 0; i < config.gridSize; i++) {
             for (int j = 0; j < config.gridSize; j++) {
                 Location location = new Location(j, i);
@@ -305,6 +307,7 @@ public class GameManager extends Group {
         if (tiles.values().parallelStream().noneMatch(Objects::isNull) && mergeMovementsAvailable() == 0) {
             gameState.isGameOver = true;
             board.setGameOver(true);
+            MusicPlayer.playGameLostSound();
         }
     }
 
