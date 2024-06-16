@@ -48,15 +48,19 @@ public class StoneModifier implements TileModifier{
     }
 
     @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
     public void onMerge() {
 
     }
 
     @Override
-    public void onDestroy() {
+    public void onSpawn() {
 
     }
-
     @Override
     public void onMove() {
         aliveTimeLeft--;
@@ -66,12 +70,6 @@ public class StoneModifier implements TileModifier{
             StoneModifier.modifiersCount--;
         }
     }
-
-    @Override
-    public void onSpawn() {
-
-    }
-
     public static void cleanup(){
         StoneModifier.modifiersCount = 0;
     }

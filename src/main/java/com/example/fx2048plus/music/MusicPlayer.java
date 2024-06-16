@@ -28,18 +28,18 @@ public class MusicPlayer {
         applyPlayerSettings(new MediaPlayer(buttonClick)).play();
     }
 
-    public static void playTransitionSound() {
-        MediaPlayer player = applyPlayerSettings(new MediaPlayer(transition));
-        player.setStartTime(Duration.seconds(1.0));
-
-        player.play();
-    }
 
     private static MediaPlayer applyPlayerSettings(MediaPlayer player) {
         player.setVolume(0.3);
         return player;
     }
 
+    public static void playTransitionSound() {
+        MediaPlayer player = applyPlayerSettings(new MediaPlayer(transition));
+        player.setStartTime(Duration.seconds(1.0));
+
+        player.play();
+    }
     public static void playMainMenuMusic() {
 
         if (currentMusicPlayer != null) {

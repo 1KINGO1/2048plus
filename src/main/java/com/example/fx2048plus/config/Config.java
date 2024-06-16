@@ -31,11 +31,11 @@ public class Config {
 
     private static final List<Modifier> mediumLevelBonuses = new ArrayList<Modifier>() {
         {
-            add(new Modifier(Modifiers.THREETWOADD, 4));
-            add(new Modifier(Modifiers.SHUFFLE, 3));
+            add(new Modifier(Modifiers.THREETWOADD, 3));
+            add(new Modifier(Modifiers.SHUFFLE, 2));
             add(new Modifier(Modifiers.LASTCHANCE, 0));
-            add(new Modifier(Modifiers.X2, 3));
-            add(new Modifier(Modifiers.REMOVE, 2));
+            add(new Modifier(Modifiers.X2, 2));
+            add(new Modifier(Modifiers.REMOVE, 1));
         }
     };
     private static final List<Modifier> mediumLevelModifiers = new ArrayList<Modifier>() {
@@ -47,7 +47,7 @@ public class Config {
 
     private static final List<Modifier> hardLevelBonuses = new ArrayList<Modifier>() {
         {
-            add(new Modifier(Modifiers.THREETWOADD, 3));
+            add(new Modifier(Modifiers.THREETWOADD, 2));
             add(new Modifier(Modifiers.SHUFFLE, 2));
             add(new Modifier(Modifiers.LASTCHANCE, 0));
             add(new Modifier(Modifiers.X2, 1));
