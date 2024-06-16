@@ -42,6 +42,10 @@ public class MusicPlayer {
 
     public static void playMainMenuMusic() {
 
+        if (currentMusicPlayer != null) {
+            currentMusicPlayer.stop();
+        }
+
         currentMusicPlayer = new MediaPlayer(mainMenuMusic);
 
         applyPlayerSettings(currentMusicPlayer);
