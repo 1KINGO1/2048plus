@@ -48,16 +48,6 @@ public class FrozenModifier implements TileModifier{
     }
 
     @Override
-    public void onMerge() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
     public void onMove() {
         aliveTimeLeft--;
 
@@ -66,7 +56,15 @@ public class FrozenModifier implements TileModifier{
             FrozenModifier.modifiersCount--;
         }
     }
+    @Override
+    public void onMerge() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
     @Override
     public void onSpawn() {
 
